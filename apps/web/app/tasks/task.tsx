@@ -1,6 +1,5 @@
 "use client"
 
-import { type Task } from "@workspace/shared"
 import { Checkbox } from "@workspace/ui/components/checkbox"
 import {
   Field,
@@ -9,18 +8,21 @@ import {
   FieldLabel,
   FieldTitle,
 } from "@workspace/ui/components/field"
+import type { RouterOutputs } from "@workspace/trpc"
 
-const Task = ({ task }: { task: Task }) => {
+type TaskItemProps = {
+  task: RouterOutputs["tasks"]["list"]["items"][number]
+}
+
+const TaskItem = ({ task }: TaskItemProps) => {
   return (
     <FieldLabel>
       <Field orientation="horizontal">
         <Checkbox
-          id="toggle-checkbox-2"
-          name="toggle-checkbox-2"
-          onCheckedChange={(checked) => {
-            console.log(checked)
-          }}
+          id={`task-${task.id}`}
+          name={`task-${task.id}`}
           checked={task.status === "done"}
+          onCheckedChange={(checked) => console.log(checked)}
         />
         <FieldContent className={task.status === "done" ? "line-through" : ""}>
           <FieldTitle>{task.title}</FieldTitle>
@@ -31,4 +33,4 @@ const Task = ({ task }: { task: Task }) => {
   )
 }
 
-export default Task
+export default TaskItem

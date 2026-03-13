@@ -1,7 +1,6 @@
 {
     "extends": "@workspace/typescript-config/bun.json",
     "compilerOptions": {
-        "outDir": "./dist",
         "paths": {
             "@/*": [
                 "./src/*"

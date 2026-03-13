@@ -11,6 +11,9 @@ import { authMiddleware, type AuthVariables } from '@/core/auth-middleware';
 import taskRouter from '@/modules/tasks/task.router';
 import noteRouter from '@/modules/notes/note.router';
 import tagRouter from '@/modules/tags/tag.router';
+import { appRouter } from '@workspace/trpc';
+import { trpcServer } from '@hono/trpc-server';
+import { db } from '@/db/drizzle';
 
 export const createApp = () => {
     const app = new Hono<{ Variables: AuthVariables }>();
@@ -53,6 +56,15 @@ export const createApp = () => {
     // app.on(['GET', 'POST'], '/api/auth/*', (c) => {
     //     return auth.handler(c.req.raw);
     // });
+
+    // ─── tRPC Handler ───────────────────────────────────────────────────
+    // app.use('/api/trpc/*', authMiddleware);
+    app.use('/api/trpc/*', trpcServer({
+        router: appRouter,
+        createContext: (_opts, _c) => ({
+            db,
+        }),
+    }));
 
     // ─── API Routes ─────────────────────────────────────────────────────
     // Tasks are publicly accessible (no auth required)
