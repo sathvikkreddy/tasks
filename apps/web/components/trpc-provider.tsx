@@ -32,7 +32,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         httpBatchLink({
           url: process.env.NEXT_PUBLIC_API_URL
             ? `${process.env.NEXT_PUBLIC_API_URL}/api/trpc`
-            : "http://localhost:2022/api/trpc",
+            : "http://localhost:3000/api/trpc",
         }),
       ],
     })

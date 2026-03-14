@@ -3,17 +3,18 @@
     "version": "0.0.0",
     "private": true,
     "type": "module",
-    "scripts": {
-        "dev": "bun run --hot src/server.ts",
-        "start": "bun run src/server.ts",
-        "db:generate": "drizzle-kit generate",
-        "db:migrate": "bun run src/db/migrate.ts",
-        "db:seed": "bun run src/db/seed.ts",
-        "typecheck": "tsc --noEmit"
-    },
+  "scripts": {
+    "dev": "tsx --watch src/server.ts",
+    "start": "node src/server.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx src/db/migrate.ts",
+    "db:seed": "tsx src/db/seed.ts",
+    "typecheck": "tsc --noEmit"
+  },
     "dependencies": {
-        "@hono/trpc-server": "^0.4.2",
-        "@hono/zod-validator": "^0.7.6",
+    "@hono/node-server": "^1.13.0",
+    "@hono/trpc-server": "^0.4.2",
+    "@hono/zod-validator": "^0.7.6",
         "@trpc/server": "^11.12.0",
         "@workspace/auth": "workspace:*",
         "@workspace/db": "workspace:*",
@@ -29,10 +30,11 @@
     },
     "devDependencies": {
         "@types/pg": "^8.11.0",
-        "drizzle-kit": "^0.31.0",
-        "@workspace/eslint-config": "workspace:^",
-        "@workspace/typescript-config": "workspace:*",
-        "eslint": "^9.39.2",
-        "typescript": "^5.9.3"
+    "drizzle-kit": "^0.31.0",
+    "@workspace/eslint-config": "workspace:^",
+    "@workspace/typescript-config": "workspace:*",
+    "eslint": "^9.39.2",
+    "tsx": "^4.7.0",
+    "typescript": "^5.9.3"
     }
 }

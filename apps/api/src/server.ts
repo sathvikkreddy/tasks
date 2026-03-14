@@ -1,12 +1,22 @@
 import { env } from '@/config/env';
 import { pinoLogger } from '@/core/logger';
 import { createApp } from '@/app';
+import { serve } from '@hono/node-server';
 
 const app = createApp();
 
-pinoLogger.info(
-    { port: env.PORT, env: env.NODE_ENV },
-    `🚀 Server running on http://localhost:${env.PORT}`,
+serve(
+    {
+        fetch: app.fetch,
+        port: env.PORT,
+        hostname: '0.0.0.0',
+    },
+    (info) => {
+        pinoLogger.info(
+            { port: info.port, hostname: info.address },
+            `🚀 Server running on http://${info.address}:${info.port}`,
+        );
+    },
 );
 
 // ─── Graceful Shutdown ──────────────────────────────────────────────
@@ -29,5 +39,3 @@ process.on('uncaughtException', (err) => {
     pinoLogger.fatal({ error: err.message }, 'Uncaught exception');
     process.exit(1);
 });
-
-export default { port: env.PORT, fetch: app.fetch };
